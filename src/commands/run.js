@@ -3,6 +3,9 @@ const Command = require('../command');
 const { ProgramMeta, languages } = require('../langutils');
 const { Session, sessionMeta } = require('../session/sessionutils');
 
+const fs = require('fs');
+const path = require('path');
+
 /** @param {string} content @return {string[]} */
 const getCodeBlocks = (content) => {
     let arr = [];
@@ -38,12 +41,21 @@ const run = new Command(
             // another todo: compiler args
             // /run c_args="-DUNICODE --static-libc++ std=c++14" cmd_args="--compiler --no-run"
             const session = new Session(message, programMeta);
-            session
+            const sessionContext = session
                 .create()
                 .then((dir) => {
-                    console.log(`${dir} created!`);
+                    // build files
+                    const programFilepath = `${dir}${path.sep}a.${programMeta.language}`;
+                    fs.writeFileSync(programFilepath, programMeta.code, { encoding: 'utf-8' });
+                    programMeta.blocks.forEach((block) => {
+                        const blockFilepath = `${dir}${path.sep}${block.header}`;
+                        // console.log(blockFilepath);
+                        fs.writeFileSync(blockFilepath, block.content, { encoding: 'utf-8' });
+                    });
+                    return dir;
                 })
                 .catch((err) => console.error(err));
+            //sessionContext.then(console.log);
         } else {
             message.channel.send({
                 embed: {
@@ -52,8 +64,6 @@ const run = new Command(
                 },
             });
         }
-        // const code = blocks.shift();
-        // console.log(getCodeBlockStripped(code));
     }
 );
 

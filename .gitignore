@@ -1,3 +1,6 @@
+#dev runtime directories
+sessions/
+
 # Logs
 logs
 *.log
