@@ -1,5 +1,5 @@
 const { Message } = require('discord.js');
-const { ProgramMeta } = require('../langutils');
+const { ProgramMeta } = require('../lang/langutils');
 
 const fs = require('fs');
 const path = require('path');

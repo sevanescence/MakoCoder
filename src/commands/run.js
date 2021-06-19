@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const Command = require('../command');
-const { ProgramMeta, languages } = require('../langutils');
+const langutils = require('../lang/langutils');
+const { ProgramMeta, languages } = require('../lang/langutils');
 const { Session, sessionMeta } = require('../session/sessionutils');
 
 const fs = require('fs');
@@ -55,7 +56,14 @@ const run = new Command(
                     return dir;
                 })
                 .catch((err) => console.error(err));
-            //sessionContext.then(console.log);
+            sessionContext.then((dir) => {
+                langutils.compile(dir, lang).then((buf) => {
+                    console.log(buf.toString());
+                    langutils.run(dir, lang).then((buf) => {
+                        message.channel.send(`\`\`\`\n${buf.toString()}\n\`\`\``);
+                    });
+                });
+            });
         } else {
             message.channel.send({
                 embed: {
