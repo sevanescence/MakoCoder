@@ -10,7 +10,7 @@ const path = require('path');
 /** @param {string} content @return {string[]} */
 const getCodeBlocks = (content) => {
     let arr = [];
-    content = content.replace(/```(.|\n|\r\n)+?```/g, (match) => {
+    content = content.replace(/```[A-Za-z0-9-._,]+?\n(.|\n|\r\n)+?```/g, (match) => {
         arr.push(match);
         return '';
     });
