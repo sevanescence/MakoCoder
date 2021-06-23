@@ -40,6 +40,7 @@ const run = new Command(
             // otherwise, send stdout
             // another todo: compiler args
             // /run c_args="-DUNICODE --static-libc++ std=c++14" cmd_args="--compiler --no-run"
+            // todo, send stderr as well. stderr currently prints to console as debug
             const session = new Session(message, programMeta);
             const sessionContext = session
                 .create()
@@ -59,7 +60,15 @@ const run = new Command(
                 langutils.compile(dir, lang).then((buf) => {
                     console.log(buf.toString());
                     langutils.run(dir, lang).then((buf) => {
-                        message.channel.send(`\`\`\`\n${buf.toString()}\n\`\`\``);
+                        if (buf.length < 1) {
+                            message.channel.send({
+                                embed: {
+                                    description: 'Program ran without output.',
+                                },
+                            });
+                        } else {
+                            message.channel.send(`\`\`\`\n${buf.toString()}\n\`\`\``);
+                        }
                     });
                 });
             });
