@@ -17,7 +17,6 @@ const getCodeBlocks = (content) => {
     return arr;
 };
 
-// i hate this language.
 const run = new Command(
     '/run',
     /** @param {Discord.Message} message */ (message) => {
@@ -32,8 +31,8 @@ const run = new Command(
         }
 
         const programMeta = ProgramMeta.resolve(message.content);
-        const lang = languages[programMeta.language];
-        if (lang) {
+        try {
+            const lang = languages.getLanguage(programMeta.language);
             // create session
             // compile
             // todo: option to read compiler stdout
@@ -64,7 +63,7 @@ const run = new Command(
                     });
                 });
             });
-        } else {
+        } catch (e) {
             message.channel.send({
                 embed: {
                     title: 'Error',

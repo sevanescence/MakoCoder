@@ -84,7 +84,7 @@ const STDERR_DIRENT = { name: 'a.err' };
  * Compile language code of session. No file dirent
  * is needed because file nameing is consistent.
  * @param {string} dir Session directory
- * @param {LanguageChildProcessMeta} language
+ * @param {LanguageMeta} language
  * @return {Promise<Buffer>}
  */
 async function compile(dir, language) {
@@ -98,7 +98,7 @@ async function compile(dir, language) {
  * This can be called on interpreted/JIT-compiled
  * languages directly.
  * @param {string} dir Session directory
- * @param {LanguageChildProcessMeta} language
+ * @param {LanguageMeta} language
  * @return {Promise<Buffer>}
  */
 async function run(dir, language) {
@@ -106,7 +106,7 @@ async function run(dir, language) {
     return pipe_buf;
 }
 
-class LanguageChildProcessMeta {
+class LanguageMeta {
     compiled = true;
     compile_args = '';
     run_args = '';
@@ -125,6 +125,14 @@ class LanguageChildProcessMeta {
 
 // todo: declare compile arguments definable in .env
 const languages = {
+    /**
+     * @param {string} lang
+     * @return {LanguageMeta} */
+    getLanguage(lang) {
+        const languageMeta = languages[lang];
+        if (languageMeta) return languageMeta;
+        else throw 'Language not found.';
+    },
     c: {
         compiled: true,
         compile_args: 'gcc -o a a.c -std=gnu11',
