@@ -1,32 +1,32 @@
 {
-  "name": "makocoder",
-  "version": "1.0.0",
-  "description": "Discord bot that lets people run code. Written in DiscordJS.",
-  "main": "src/index.js",
-  "dependencies": {
-    "dotenv": "^10.0.0",
-    "discord.js": "^12.5.3"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "nodemon src/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MakotoMiyamoto/MakoCoder.git"
-  },
-  "keywords": [
-    "discordjs",
-    "discord",
-    "bot",
-    "code",
-    "runner",
-    "coderunner"
-  ],
-  "author": "MakotoMiyamoto",
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/MakotoMiyamoto/MakoCoder/issues"
-  },
-  "homepage": "https://github.com/MakotoMiyamoto/MakoCoder#readme"
+    "name": "makocoder",
+    "version": "1.0.1",
+    "description": "Discord bot that lets people run code. Written in DiscordJS.",
+    "main": "src/index.js",
+    "dependencies": {
+        "dotenv": "^10.0.0",
+        "discord.js": "^12.5.3"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "nodemon src/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MakotoMiyamoto/MakoCoder.git"
+    },
+    "keywords": [
+        "discordjs",
+        "discord",
+        "bot",
+        "code",
+        "runner",
+        "coderunner"
+    ],
+    "author": "MakotoMiyamoto",
+    "license": "GPL-3.0-or-later",
+    "bugs": {
+        "url": "https://github.com/MakotoMiyamoto/MakoCoder/issues"
+    },
+    "homepage": "https://github.com/MakotoMiyamoto/MakoCoder#readme"
 }

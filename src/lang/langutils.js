@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
+const path = require('path');
 
 /** @param {string} content @return {string[]} */
 const getCodeBlocks = (content) => {
@@ -102,7 +103,11 @@ async function compile(dir, language) {
  * @return {Promise<Buffer>}
  */
 async function run(dir, language) {
-    const pipe_buf = execSync(language.run_args, { cwd: dir });
+    let argv = language.run_args;
+    if (fs.existsSync(`${dir}${path.sep}STDIN`)) {
+        argv = `${argv} 0< STDIN`;
+    }
+    const pipe_buf = execSync(argv, { cwd: dir });
     return pipe_buf;
 }
 
