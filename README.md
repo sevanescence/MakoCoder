@@ -13,3 +13,7 @@ Discord bot that lets people run code. Written in DiscordJS. Currently hard-tail
 
 -   Promise chaining in src/commands/run.js in language process
 -   Return buffer containing "Interpreted" if language needn't be compiled
+
+### 1.0.2-1
+
+-   Removed `src/tmp.js`, was a redundant file I forgot to .gitignore

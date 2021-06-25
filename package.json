@@ -1,6 +1,6 @@
 {
     "name": "makocoder",
-    "version": "1.0.2",
+    "version": "1.0.2-1",
     "description": "Discord bot that lets people run code. Written in DiscordJS.",
     "main": "src/index.js",
     "dependencies": {
