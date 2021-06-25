@@ -17,16 +17,24 @@ const getCodeBlocks = (content) => {
     return arr;
 };
 
+const RESULT_NO_STDOUT = {
+    embed: {
+        description: 'Program ran without output.',
+    },
+};
+
+const USAGE_EMBED = {
+    embed: {
+        description: 'This is meant to be a helpful embed.',
+    },
+};
+
 const run = new Command(
     '/run',
     /** @param {Discord.Message} message */ (message) => {
         const blocks = getCodeBlocks(message.content);
         if (blocks.length < 1) {
-            message.channel.send({
-                embed: {
-                    description: 'this is meant to be a helpful embed.',
-                },
-            });
+            message.channel.send(USAGE_EMBED);
             return;
         }
 
@@ -57,20 +65,19 @@ const run = new Command(
                 })
                 .catch((err) => console.error(err));
             sessionContext.then((dir) => {
-                langutils.compile(dir, lang).then((buf) => {
-                    console.log(buf.toString());
-                    langutils.run(dir, lang).then((buf) => {
-                        if (buf.length < 1) {
-                            message.channel.send({
-                                embed: {
-                                    description: 'Program ran without output.',
-                                },
-                            });
+                const lang_process = langutils.compile(dir, lang);
+                lang_process
+                    .then((buf) => {
+                        console.log(buf.toString());
+                        return langutils.run(dir, lang);
+                    })
+                    .then((buf) => {
+                        if (!buf.length) {
+                            message.channel.send(RESULT_NO_STDOUT);
                         } else {
                             message.channel.send(`\`\`\`\n${buf.toString()}\n\`\`\``);
                         }
                     });
-                });
             });
         } catch (e) {
             message.channel.send({

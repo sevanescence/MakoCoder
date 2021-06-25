@@ -81,6 +81,8 @@ const STDERR_DIRENT = { name: 'a.err' };
 // until after compilation and runtime are implemented,
 // just to save myself time.
 
+const COMPILE_STATUS_INTERPRETED = 'Interpreted';
+
 /**
  * Compile language code of session. No file dirent
  * is needed because file nameing is consistent.
@@ -89,7 +91,9 @@ const STDERR_DIRENT = { name: 'a.err' };
  * @return {Promise<Buffer>}
  */
 async function compile(dir, language) {
-    const pipe_buf = execSync(language.compile_args, { cwd: dir });
+    const pipe_buf = language.compiled
+        ? execSync(language.compile_args, { cwd: dir })
+        : new Promise((res) => res(Buffer.alloc(12, COMPILE_STATUS_INTERPRETED, 'utf-8')));
     return pipe_buf;
 }
 
@@ -129,6 +133,7 @@ class LanguageMeta {
 // language. :)
 
 // todo: declare compile arguments definable in .env
+// im not sure how to restructure this.
 const languages = {
     /**
      * @param {string} lang
@@ -138,6 +143,7 @@ const languages = {
         if (languageMeta) return languageMeta;
         else throw 'Language not found.';
     },
+
     c: {
         compiled: true,
         compile_args: 'gcc -o a a.c -std=gnu11',
