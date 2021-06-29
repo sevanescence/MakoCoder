@@ -69,7 +69,8 @@ const run = new Command(
                 lang_process
                     .then((buf) => {
                         console.log(buf.toString());
-                        return langutils.run(dir, lang);
+                        const cargv = message.content.match(/(?<=\/run\s).+?(?=(\n|\r\n))/)[0];
+                        return langutils.run(dir, lang, cargv);
                     })
                     .then((buf) => {
                         if (!buf.length) {

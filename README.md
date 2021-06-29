@@ -17,3 +17,7 @@ Discord bot that lets people run code. Written in DiscordJS. Currently hard-tail
 ### 1.0.2-1
 
 -   Removed `src/tmp.js`, was a redundant file I forgot to .gitignore
+
+### 1.1.0
+
+-   Added argv support, add args after /run command on same line

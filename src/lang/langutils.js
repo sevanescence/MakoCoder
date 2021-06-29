@@ -104,10 +104,11 @@ async function compile(dir, language) {
  * languages directly.
  * @param {string} dir Session directory
  * @param {LanguageMeta} language
+ * @param {string[]} cargv
  * @return {Promise<Buffer>}
  */
-async function run(dir, language) {
-    let argv = language.run_args;
+async function run(dir, language, cargv) {
+    let argv = `${language.run_args}${cargv && ' ' + cargv}`;
     if (fs.existsSync(`${dir}${path.sep}STDIN`)) {
         argv = `${argv} 0< STDIN`;
     }
